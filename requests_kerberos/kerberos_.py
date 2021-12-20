@@ -1,7 +1,6 @@
 import base64
 import logging
 import re
-import sys
 import warnings
 
 import spnego
@@ -144,10 +143,7 @@ def _get_channel_bindings_application_data(response):
 
     if isinstance(raw_response, HTTPResponse):
         try:
-            if sys.version_info > (3, 0):
-                socket = raw_response._fp.fp.raw._sock
-            else:
-                socket = raw_response._fp.fp._sock
+            socket = raw_response._fp.fp.raw._sock
         except AttributeError:
             warnings.warn("Failed to get raw socket for CBT; has urllib3 impl changed",
                           NoCertificateRetrievedWarning)
@@ -236,7 +232,7 @@ class HTTPKerberosAuth(AuthBase):
             log.exception(
                 "generate_request_header(): {0} failed:".format(kerb_stage))
             log.exception(error)
-            raise KerberosExchangeError("%s failed: %s" % (kerb_stage, str(error)))
+            raise KerberosExchangeError("%s failed: %s" % (kerb_stage, str(error))) from error
 
     def authenticate_user(self, response, **kwargs):
         """Handles user authentication with gssapi/kerberos"""
