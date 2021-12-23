@@ -50,11 +50,11 @@ setup(
     license='ISC License',
     install_requires=[
         'requests>=1.1.0',
-        'cryptography>=1.3',
+        'cryptography>=1.3;python_version!="3.3"',
+        'cryptography>=1.3,<2;python_version=="3.3"',
         'pyspnego[kerberos]',
     ],
     extras_require={},
-    python_requires='>=3.6',
     classifiers=[
         "License :: OSI Approved :: ISC License (ISCL)"
     ],
